@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.shortcuts import render
 from akirachix.teacher.apps import TeacherConfig
 from api.serializer import CourseSerializer, ClassesSerializer, StudentSerializer, TeacherSerializer
-
 from course.models import Course
 from student.models import Student
 from rest_framework.views import APIView
@@ -24,6 +23,7 @@ class CourseListViews(APIView):
         course = Course.objects.all()
         serializer = CourseSerializer(course, many=True)
         return Response(serializer.data)
+    
 
 
 class StudentListViews(APIView):
@@ -31,6 +31,31 @@ class StudentListViews(APIView):
         students=Student.objects.all()
         serializer=StudentSerializer(students,many=...)
         return Response(serializer)
+        first_name = request.query_params.get("first_name")
+        if first_name:
+            students = students.filter(first_name=first_name)
+            serializar=StudentSerializer(students,many=True)
+            return Response(serializer.daat)
+        student = Student.object.all()
+        country = request.query.pqrqms .get("country")
+        first_name=request.query.params.get
+    
+    def post(self,request,id):
+        student = Student.objects.get(id=id)
+        action=request.data.get("action")
+        if action == "enroll":
+            course_id=request.data.get("course_id")
+            self.enroll_student(student,course_id)
+            return Response(status=status.HTTP_202_ACCEPTED)
+        
+        
+        
+    
+    
+        
+    
+            
+    
     
     def post(self,request):
         serializer=StudentSerializer(data=request.data)
@@ -83,7 +108,7 @@ class teacherDetailView(APIView):
         Teacher=Teacher.objects.all.get(id=id)
         serializer =CourseSerializer(Teacher)
         return Response(serializer.data)
-    
+     
     def put(self,request,id):
         Teacher= Teacher.objects.get(id=id)
         serializer=TeacherSerializer(Teacher,data=request.data)
